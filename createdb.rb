@@ -5,7 +5,7 @@ DB = Sequel.connect(connection_string)                                          
 #######################################################################################
 
 # Database schema - this should reflect your domain model
-DB.create_table! :events do
+DB.create_table! :wineries do
   primary_key :id
   String :title
   String :description, text: true
@@ -14,7 +14,7 @@ DB.create_table! :events do
 end
 DB.create_table! :rsvps do
   primary_key :id
-  foreign_key :event_id
+  foreign_key :winery_id
   Boolean :going
   String :name
   String :email
@@ -22,14 +22,19 @@ DB.create_table! :rsvps do
 end
 
 # Insert initial (seed) data
-events_table = DB.from(:events)
+wineries_table = DB.from(:wineries)
 
-events_table.insert(title: "Bacon Burger Taco Fest", 
+wineries_table.insert(title: "Jessup Cellars", 
                     description: "Here we go again bacon burger taco fans, another Bacon Burger Taco Fest is here!",
                     date: "June 21",
                     location: "Kellogg Global Hub")
 
-events_table.insert(title: "Kaleapolooza", 
+wineries_table.insert(title: "Far Niente", 
+                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
+                    date: "July 4",
+                    location: "Napa Valley")
+
+wineries_table.insert(title: "Pence", 
                     description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
                     date: "July 4",
                     location: "Nowhere")
