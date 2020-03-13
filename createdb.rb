@@ -9,15 +9,15 @@ DB.create_table! :wineries do
   primary_key :id
   String :title
   String :description, text: true
-  String :date
+  String :favorite wine
   String :location
 end
-DB.create_table! :rsvps do
+DB.create_table! :reviews do
   primary_key :id
   foreign_key :winery_id
-  Boolean :going
+  Boolean :most recent
   String :name
-  String :email
+  String :date
   String :comments, text: true
 end
 
@@ -25,16 +25,16 @@ end
 wineries_table = DB.from(:wineries)
 
 wineries_table.insert(title: "Jessup Cellars", 
-                    description: "Here we go again bacon burger taco fans, another Bacon Burger Taco Fest is here!",
-                    date: "June 21",
-                    location: "Kellogg Global Hub")
+                    description: "The Jessup Cellars story is one of passion, family, hard work, resilience and, of course, fantastic wine. Over the past two decades, Jessup Cellars has earned a loyal following for their ultra-premium wines of distinction and a word-of-mouth reputation for hosting one of the friendliest tasting rooms in all of wine county.",
+                    favorite wine: "Manny's Blend",
+                    location: "Yountville, CA")
 
 wineries_table.insert(title: "Far Niente", 
-                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
-                    date: "July 4",
-                    location: "Napa Valley")
+                    description: "Far Niente's Estate Bottled Cabernet Sauvignon combines their noble vineyards in Oakville with their passion and commitment to making the very best wine possible.",
+                    favorite wine: "En Route Pinot Noir",
+                    location: "Oakville, CA")
 
 wineries_table.insert(title: "Pence", 
-                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
-                    date: "July 4",
-                    location: "Nowhere")
+                    description: "In the classical tradition, their wines are intended to be directly representative of their terroir",
+                    favorite wine: "Pinot Noir",
+                    location: "Sta. Rita Hills, CA")

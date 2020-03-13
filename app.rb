@@ -15,11 +15,11 @@ before { puts; puts "--------------- NEW REQUEST ---------------"; puts }       
 after { puts; }                                                                       #
 #######################################################################################
 
-events_table = DB.from(:events)
-rsvps_table = DB.from(:rsvps)
+wineries_table = DB.from(:wineries)
+reviews_table = DB.from(:reviews)
 
-events_table = DB.from(:events)
-rsvps_table = DB.from(:rsvps)
+wineries_table = DB.from(:wineries)
+reviews_table = DB.from(:reviews)
 users_table = DB.from(:users)
 
 before do
@@ -27,32 +27,32 @@ before do
 end
 
 get "/" do
-    puts events_table.all
+    puts wineries_table.all
     @events = events_table.all.to_a
     view "events"
 end
 
-get "/events/:id" do
-    @event = events_table.where(id: params[:id]).to_a[0]
-    @rsvps = rsvps_table.where(event_id: @event[:id])
-    @going_count = rsvps_table.where(event_id: @event[:id], going: true).count
+get "/wineries/:id" do
+    @wineries = wineries_table.where(id: params[:id]).to_a[0]
+    @reviews = reviews_table.where(event_id: @wineries[:id])
+    @reviews_count = reviews_table.where(event_id: @wineries[:id], going: true).count
     @users_table = users_table
     view "event"
 end
 
-get "/events/:id/rsvps/new" do
-    @event = events_table.where(id: params[:id]).to_a[0]
-    view "new_rsvp"
+get "/events/:id/reviews/new" do
+    @wineries = wineries_table.where(id: params[:id]).to_a[0]
+    view "new_reviews"
 end
 
-get "/events/:id/rsvps/create" do
+get "/events/:id/reviews/create" do
     puts params
-    @event = events_table.where(id: params["id"]).to_a[0]
-    rsvps_table.insert(event_id: params["id"],
+    @wineries = wineries_table.where(id: params["id"]).to_a[0]
+    reviews_table.insert(event_id: params["id"],
                        user_id: session["user_id"],
                        going: params["going"],
                        comments: params["comments"])
-    view "create_rsvp"
+    view "create_reviews"
 end
 
 get "/users/new" do
