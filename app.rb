@@ -28,8 +28,8 @@ end
 
 get "/" do
     puts wineries_table.all
-    @events = events_table.all.to_a
-    view "events"
+    @wineries = wineries_table.all.to_a
+    view "wineries"
 end
 
 get "/wineries/:id" do
@@ -37,15 +37,15 @@ get "/wineries/:id" do
     @reviews = reviews_table.where(event_id: @wineries[:id])
     @reviews_count = reviews_table.where(event_id: @wineries[:id], going: true).count
     @users_table = users_table
-    view "event"
+    view "wineries"
 end
 
-get "/events/:id/reviews/new" do
+get "/wineries/:id/reviews/new" do
     @wineries = wineries_table.where(id: params[:id]).to_a[0]
     view "new_reviews"
 end
 
-get "/events/:id/reviews/create" do
+get "/wineries/:id/reviews/create" do
     puts params
     @wineries = wineries_table.where(id: params["id"]).to_a[0]
     reviews_table.insert(event_id: params["id"],
