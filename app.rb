@@ -50,7 +50,6 @@ get "/wineries/:id/reviews/create" do
     @wineries = wineries_table.where(id: params["id"]).to_a[0]
     reviews_table.insert(event_id: params["id"],
                        user_id: session["user_id"],
-                       going: params["going"],
                        comments: params["comments"])
     view "create_reviews"
 end
