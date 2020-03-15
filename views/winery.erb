@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-sm-9">
+        <h2>
+            <i class="far fa-calendar-alt"></i>
+            <%= @wineries[:date] %>
+        </h2>
+        <h1><%= @wineries[:title] %></h1>
+        <p><%= @wineries[:description] %></p>
+        <% for reviews in @reviews %>
+            <div class="media">
+                <% if reviews[:going] %>
+                    <i class="fas fa-thumbs-up fa-3x mr-3"></i>
+                <% else %>
+                    <i class="fas fa-thumbs-down fa-3x mr-3"></i>
+                <% end %>
+                <div class="media-body">
+                    <h5 class="mt-0"><%= reviews[:name] %></h5>
+                    <%= reviews[:comments] %>
+                </div>
+            </div>
+        <% end %>
+        <p class="mt-5">
+            <a href="/wineries/<%= @wineries[:id] %>/reviews/new" class="btn btn-primary">Review</a>
+        </p>
+    </div>
+    <div class="col-sm-3">
+        <h3>Where?</h3>
+        <p><%= @reviews[:location] %></p>
+        <h3>How many reviews?</h3>
+        <p><%= @reviews_count %></p>
+    </div>
+</div>
