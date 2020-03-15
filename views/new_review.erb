@@ -1,13 +1,13 @@
 <h2>
     <i class="far fa-calendar-alt"></i>
-    <%= @wineries[:date] %>
+    <%= @winery[:date] %>
 </h2>
-<h1>Reviews for <%= @wineries[:title] %></h1>
+<h1>Review for <%= @winery[:title] %></h1>
 
-<form action="/events/<%= @wineries[:id] %>/reviews/create">
+<form action="/wineries/<%= @winery[:id] %>/reviews/create">
   <div class="form-group">
     <label>What are your thoughts?</label>
-    <select class="form-control" name="going">
+    <select class="form-control" name="yes">
       <option value="1">Yes</option>
       <option value="0">No</option>
     </select>
