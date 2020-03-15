@@ -16,30 +16,9 @@ before { puts; puts "--------------- NEW REQUEST ---------------"; puts }       
 after { puts; }                                                                       #
 #######################################################################################
 
-wineries_table = DB.from(:wineries)
-reviews_table = DB.from(:reviews)
-
-wineries_table = DB.from(:wineries)
-reviews_table = DB.from(:reviews)
+events_table = DB.from(:events)
+rsvps_table = DB.from(:rsvps)
 users_table = DB.from(:users)
-
-before do
-    @current_user = users_table.where(id: session["user_id"]).to_a[0]
-end
-
-get "/" do
-    puts wineries_table.all
-    @wineries = wineries_table.all.to_a
-    view "wineries"
-end
-
-get "/wineries/:id" do
-    @winery = wineries_table.where(id: params[:id]).to_a[0]
-    @reviews = reviews_table.where(event_id: @wineries[:id])
-    @reviews_count = reviews_table.where(event_id: @wineries[:id], yes: true).count
-    @users_table = users_table
-    view "winery"
-end
 
 #geocode
     results = Geocoder.search(@winery[:location])
@@ -47,20 +26,37 @@ end
     results = Geocoder.search(params["q"])
     view "winery"
 
-
-get "/wineries/:id/reviews/new" do
-    @winery = wineries_table.where(id: params[:id]).to_a[0]
-    view "new_reviews"
+before do
+    @current_user = users_table.where(id: session["user_id"]).to_a[0]
 end
 
-get "/wineries/:id/reviews/create" do
+get "/" do
+    puts events_table.all
+    @events = events_table.all.to_a
+    view "events"
+end
+
+get "/events/:id" do
+    @event = events_table.where(id: params[:id]).to_a[0]
+    @rsvps = rsvps_table.where(event_id: @event[:id])
+    @going_count = rsvps_table.where(event_id: @event[:id], going: true).count
+    @users_table = users_table
+    view "event"
+end
+
+get "/events/:id/rsvps/new" do
+    @event = events_table.where(id: params[:id]).to_a[0]
+    view "new_rsvp"
+end
+
+get "/events/:id/rsvps/create" do
     puts params
-    @winery = wineries_table.where(id: params["id"]).to_a[0]
-    reviews_table.insert(event_id: params["id"],
+    @event = events_table.where(id: params["id"]).to_a[0]
+    rsvps_table.insert(event_id: params["id"],
                        user_id: session["user_id"],
-                       review: params["yes"],
+                       going: params["going"],
                        comments: params["comments"])
-    view "create_reviews"
+    view "create_rsvp"
 end
 
 get "/users/new" do
