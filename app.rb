@@ -20,15 +20,6 @@ events_table = DB.from(:events)
 rsvps_table = DB.from(:rsvps)
 users_table = DB.from(:users)
 
-#geocode
-    results = Geocoder.search(@event[:location])
-    @lat_long = results.first.coordinates # => [lat, long]
-
-    # Define the lat and long
-    @lat = "#{@lat_long [0]}"
-    @long = "#{@lat_long [1]}"
-    view "event"
-
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
 end
@@ -44,6 +35,15 @@ get "/events/:id" do
     @rsvps = rsvps_table.where(event_id: @event[:id])
     @going_count = rsvps_table.where(event_id: @event[:id], going: true).count
     @users_table = users_table
+
+    #geocode
+    results = Geocoder.search(@event[:location])
+    @lat_long = results.first.coordinates # => [lat, long]
+
+    # Define the lat and long
+    @lat = @lat_long [0]
+    @long = @lat_long [1]
+    
     view "event"
 end
 
