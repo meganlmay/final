@@ -6,7 +6,7 @@ require "sequel"                                                                
 require "logger"                                                                      #
 require "twilio-ruby"                                                                 #
 require "bcrypt" 
-require "geocode"                                                                     #
+require "geocoder"                                                                     #
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
 DB ||= Sequel.connect(connection_string)                                              #
 DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                          #
@@ -21,10 +21,13 @@ rsvps_table = DB.from(:rsvps)
 users_table = DB.from(:users)
 
 #geocode
-    results = Geocoder.search(@winery[:location])
+    results = Geocoder.search(@event[:location])
     @lat_long = results.first.coordinates # => [lat, long]
-    results = Geocoder.search(params["q"])
-    view "winery"
+
+    # Define the lat and long
+    @lat = "#{@lat_long [0]}"
+    @long = "#{@lat_long [1]}"
+    view "event"
 
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
