@@ -41,16 +41,16 @@ get "/wineries/:id" do
     view "winery"
 end
 
-get "wineries/:id/location" do
-    results = Geocoder.search(params["q"])
+#geocode
+    results = Geocoder.search(@winery[:location])
     @lat_long = results.first.coordinates # => [lat, long]
-    @location = results.first.city
+    results = Geocoder.search(params["q"])
 
-    # Define the lat and long
+# Define the lat and long
     @lat = "#{@lat_long [0]}"
     @long = "#{@lat_long [1]}"
-    src= “https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw=<%= @lat_long %>&zoom=6” allowfullscreen>
-end 
+    view "winery"
+
 
 get "/wineries/:id/reviews/new" do
     @winery = wineries_table.where(id: params[:id]).to_a[0]

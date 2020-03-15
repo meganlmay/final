@@ -27,14 +27,14 @@ wineries_table = DB.from(:wineries)
 wineries_table.insert(title: "Jessup Cellars", 
                     description: "The Jessup Cellars story is one of passion, family, hard work, resilience and, of course, fantastic wine. Over the past two decades, Jessup Cellars has earned a loyal following for their ultra-premium wines of distinction and a word-of-mouth reputation for hosting one of the friendliest tasting rooms in all of wine county.",
                     favorite wine: "Manny's Blend",
-                    location: "Yountville, CA")
+                    location: "6740 Washington Street Yountville, CA 94599")
 
 wineries_table.insert(title: "Far Niente", 
                     description: "Far Niente's Estate Bottled Cabernet Sauvignon combines their noble vineyards in Oakville with their passion and commitment to making the very best wine possible.",
                     favorite wine: "En Route Pinot Noir",
-                    location: "Oakville, CA")
+                    location: "1350 Acacia Drive Oakville, CA 94562")
 
 wineries_table.insert(title: "Pence", 
                     description: "In the classical tradition, their wines are intended to be directly representative of their terroir",
                     favorite wine: "Pinot Noir",
-                    location: "Sta. Rita Hills, CA")
+                    location: "1909 West Highway 246 Sta. Rita Hills, CA 93427")
