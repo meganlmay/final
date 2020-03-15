@@ -45,10 +45,6 @@ end
     results = Geocoder.search(@winery[:location])
     @lat_long = results.first.coordinates # => [lat, long]
     results = Geocoder.search(params["q"])
-
-# Define the lat and long
-    @lat = "#{@lat_long [0]}"
-    @long = "#{@lat_long [1]}"
     view "winery"
 
 
